@@ -20,16 +20,23 @@ public class HelloController {
     }
     // lives at hello/hello
     // handles request of the form / hello?name=aParam
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello, " + name + "!!";
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, value="hello")
+    public String helloWithQueryParam(@RequestParam String name, String language) {
+        String greeting = createMessage(language);
+        return greeting + ", " + name + "!";
     }
 
-    //handles /hello/LaunchCode
-     @GetMapping("{name}")
-    public String helloWithPathParam(@PathVariable String name){
-        return "Hello, " + name + "!";
-     }
+    public static String createMessage(String language){
+        return switch (language) {
+            case "fr" -> "Bonjour";
+            case "es" -> "Hola";
+            case "en" -> "Hello";
+            case "ma" -> "你好";
+            case "hi" -> "नमस्ते";
+            default -> "Hi";
+        };
+    }
+
     //lives at hello/form
      @GetMapping("form")
     public String helloForm(){
@@ -43,10 +50,6 @@ public class HelloController {
                 "</html>";
      }
 
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithPathParam2(@RequestParam String name) {
-        return "Hello, " + name + "!!";
-    }
 
     //lives at hello/form2
     @GetMapping("form2")
@@ -56,7 +59,14 @@ public class HelloController {
                 "<form action='hello' method='post'>" + //submit a request to /hello
                 "<input type='text' name='name'>" +
                 "<select name='language' id='language'>" +
-                "<option value='french'>French</option>" +
+                "<option value='fr'>French</option>" +
+                "<option value='es'>Spanish</option>" +
+                "<option value='en'>English</option>" +
+                "<option value='ma'>Mandarin</option>" +
+                //你好 Nǐ hǎo
+                "<option value='mn'>Mandarin</option>" +
+                //नमस्ते namaste
+                "<option value='hi'>Hindi</option>" +
                 "</select>" +
                 "<input type='submit' value='Greet Me!'>" +
                 "</form>" +
