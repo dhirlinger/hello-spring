@@ -22,7 +22,7 @@ public class HelloController {
     // handles request of the form / hello?name=aParam
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello, " + name + "!";
+        return "Hello, " + name + "!!";
     }
 
     //handles /hello/LaunchCode
@@ -42,4 +42,26 @@ public class HelloController {
                 "</body>" +
                 "</html>";
      }
+
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+    public String helloWithPathParam2(@RequestParam String name) {
+        return "Hello, " + name + "!!";
+    }
+
+    //lives at hello/form2
+    @GetMapping("form2")
+    public String helloForm2(){
+        return "<html>" +
+                "<body>" +
+                "<form action='hello' method='post'>" + //submit a request to /hello
+                "<input type='text' name='name'>" +
+                "<select name='language' id='language'>" +
+                "<option value='french'>French</option>" +
+                "</select>" +
+                "<input type='submit' value='Greet Me!'>" +
+                "</form>" +
+                "</body>" +
+                "</html>";
+    }
+
 }
